@@ -1,0 +1,45 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: money-transfer
+  datasource:
+    # Defaults to in-memory H2 so the app runs with zero setup.
+    # For production/Postgres, activate the 'postgres' profile or set env vars below.
+    url: ${DATABASE_URL:jdbc:h2:mem:moneytransfer;DB_CLOSE_DELAY=-1}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:}
+    driver-class-name: ${DATABASE_DRIVER:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  h2:
+    console:
+      enabled: false
+
+app:
+  jwt:
+    # MUST be overridden in production via JWT_SECRET env var (min 32 chars)
+    secret: ${JWT_SECRET:dev-only-secret-key-change-me-please-32chars!!}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  seed:
+    admin-password: ${SEED_ADMIN_PASSWORD:admin123}
+    demo-password: ${SEED_DEMO_PASSWORD:demo123}
+
+---
+# Production profile: spring.profiles.active=postgres
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/moneytransfer}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver

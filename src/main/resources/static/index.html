@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Transfer — Secure Wallet</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+    <!-- AUTH VIEW -->
+    <div id="auth-view" class="card auth-card">
+        <h1>Money Transfer</h1>
+        <p class="subtitle">Secure wallet &amp; payments</p>
+        <div class="tabs">
+            <button id="tab-login" class="tab active">Login</button>
+            <button id="tab-register" class="tab">Register</button>
+        </div>
+
+        <form id="login-form">
+            <input type="text" id="login-username" placeholder="Username" required autocomplete="username">
+            <input type="password" id="login-password" placeholder="Password" required autocomplete="current-password">
+            <button type="submit" class="btn primary">Login</button>
+        </form>
+
+        <form id="register-form" class="hidden">
+            <input type="text" id="reg-username" placeholder="Username (min 3 chars)" required>
+            <input type="email" id="reg-email" placeholder="Email" required>
+            <input type="password" id="reg-password" placeholder="Password (min 8 chars)" required>
+            <button type="submit" class="btn primary">Create Account</button>
+        </form>
+
+        <div id="auth-error" class="error hidden"></div>
+        <p class="hint">Demo: alice / demo123 &nbsp;•&nbsp; bob / demo123 &nbsp;•&nbsp; admin / admin123</p>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboard-view" class="hidden">
+        <header>
+            <div>
+                <h1>Money Transfer</h1>
+                <span id="user-badge" class="badge"></span>
+            </div>
+            <button id="logout-btn" class="btn ghost">Logout</button>
+        </header>
+
+        <div class="grid">
+            <section class="card">
+                <h2>My Wallet</h2>
+                <div id="balance" class="balance">—</div>
+                <p id="wallet-user" class="muted"></p>
+            </section>
+
+            <section class="card">
+                <h2>Send Money</h2>
+                <form id="transfer-form">
+                    <input type="text" id="transfer-to" placeholder="Recipient username" required>
+                    <input type="number" id="transfer-amount" placeholder="Amount" min="0.01" step="0.01" required>
+                    <button type="submit" class="btn primary">Transfer</button>
+                </form>
+                <div id="transfer-msg" class="hidden"></div>
+            </section>
+
+            <section class="card wide">
+                <h2>Transaction History</h2>
+                <table>
+                    <thead>
+                        <tr><th>Date</th><th>From</th><th>To</th><th>Amount</th><th>Status</th><th>Ref</th></tr>
+                    </thead>
+                    <tbody id="tx-body"></tbody>
+                </table>
+                <div class="pager">
+                    <button id="prev-page" class="btn ghost">Prev</button>
+                    <span id="page-info"></span>
+                    <button id="next-page" class="btn ghost">Next</button>
+                </div>
+            </section>
+
+            <section id="admin-panel" class="card wide hidden">
+                <h2>Admin — Audit Log</h2>
+                <table>
+                    <thead>
+                        <tr><th>Time</th><th>Actor</th><th>Action</th><th>Details</th><th>IP</th></tr>
+                    </thead>
+                    <tbody id="audit-body"></tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
