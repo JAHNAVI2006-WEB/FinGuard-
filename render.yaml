@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: finguard-money-transfer
+    runtime: java
+    plan: free
+    buildCommand: "mvn clean package -DskipTests"
+    startCommand: "java -jar target/money-transfer-1.0.0.jar"
+    envVars:
+      - key: JAVA_VERSION
+        value: "17"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SPRING_PROFILES_ACTIVE
+        value: postgres
+      - key: DB_HOST
+        fromDatabase:
+          name: finguard-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: finguard-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: finguard-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: finguard-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: finguard-db
+          property: password
+      - key: SEED_ADMIN_PASSWORD
+        generateValue: true
+      - key: SEED_DEMO_PASSWORD
+        value: demo123
+
+databases:
+  - name: finguard-db
+    plan: free
+    databaseName: finguard
+    user: finguard

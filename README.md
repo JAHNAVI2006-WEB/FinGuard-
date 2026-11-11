@@ -57,14 +57,31 @@ curl -X POST localhost:8080/api/wallet/transfer \
   -d '{"recipientUsername":"bob","amount":100.50}'
 ```
 
-## Production deployment (Postgres)
+## Production deployment
+
+### Option A — Render (easiest, one click)
+
+The repo contains a `render.yaml` blueprint that provisions the web service
+**and** a free Postgres database automatically:
+
+1. Go to https://render.com → sign up (free) → **New → Blueprint**
+2. Connect your GitHub account and select the `FinGuard-` repo
+3. Click **Apply** — Render builds the jar and gives you a live URL like
+   `https://finguard-money-transfer.onrender.com`
+4. `JWT_SECRET` and the admin password are auto-generated; find them under
+   the service's **Environment** tab if needed.
+
+Note: free-tier services sleep after ~15 min idle — the first request after
+sleep takes ~30–60 s to wake up. That's normal.
+
+### Option B — Manual (any Java host)
 
 Set env vars and activate the `postgres` profile:
 
 ```bash
 export SPRING_PROFILES_ACTIVE=postgres
-export DATABASE_URL=jdbc:postgresql://<host>:5432/moneytransfer
-export DATABASE_USERNAME=... DATABASE_PASSWORD=...
+export DB_HOST=<host> DB_PORT=5432 DB_NAME=moneytransfer
+export DB_USERNAME=... DB_PASSWORD=...
 export JWT_SECRET=<random-secret-at-least-32-chars>   # REQUIRED
 export SEED_ADMIN_PASSWORD=... SEED_DEMO_PASSWORD=...
 

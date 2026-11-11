@@ -39,7 +39,7 @@ spring:
     activate:
       on-profile: postgres
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/moneytransfer}
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:postgres}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:moneytransfer}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
