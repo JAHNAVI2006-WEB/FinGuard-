@@ -80,7 +80,7 @@ Deploy the jar anywhere (Render, Railway, Fly.io, a VPS). Set `PORT` if the plat
 mvn test
 ```
 
-## Security notes (for interviews)
+## Security notes 
 
 - **Why pessimistic locking?** Wallet balance updates are read-modify-write; optimistic `@Version` alone can still lose updates under high contention. `PESSIMISTIC_WRITE` serializes access per wallet row. Locks are taken in sorted user-id order to avoid deadlock cycles.
 - **Why JWT + stateless?** No server-side sessions; each request is authenticated by signature. CSRF is disabled because there are no cookies — the token is sent in the `Authorization` header.
